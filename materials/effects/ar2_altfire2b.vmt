@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "effects/ar2_altfire2b"
+	"$additive" 1
+	"$translucent" 1
+	"$vertexcolor" 1
+}
