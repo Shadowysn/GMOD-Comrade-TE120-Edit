@@ -1,5 +1,11 @@
 # GMOD-Comrade-TE120-Edit
+In the Zero Point Energy Projector folder:
+
 An edited version of Comrade Communist's TE120 gun. I do not own the actual mod.
+
+In the Concussion Gun (Mine) folder:
+
+A very W.I.P. version of a seperate concussion gun supposed to not use any code from Comrade's version, except as placeholders.
 
 Edited and posted by Shadowysn.
 
