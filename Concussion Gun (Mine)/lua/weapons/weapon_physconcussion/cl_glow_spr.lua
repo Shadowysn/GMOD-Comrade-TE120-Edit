@@ -129,10 +129,10 @@ local function DoZap(wep_ent, nFOV, viewM, zapMode)
 		if StartPos != nil and StartPosO != nil then
 			local zLength = (StartPosO - StartPos):Length()
 			render.SetMaterial( Mat )
-			CheckDrawSprite( StartPosO, scale, scale, ColorSet(wep_ent, 80) or Color(255,255,255,80))
+			CheckDrawSprite( StartPosO, scale, scale, ColorSet(wep_ent, 80) or Color(255,150,150,80))
 			render.SetMaterial( Zap )
 			
-			CheckDrawBeam( StartPosO, StartPos, 3, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + zLength / 128	, ColorSet(wep_ent, 195) or Color( 255, 255, 255, 195 ) ) 
+			CheckDrawBeam( StartPosO, StartPos, 3, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + zLength / 128	, ColorSet(wep_ent, 195) or Color(255,150,150,195) ) 
 		end
 	else
 		StartPos = GetAttachment("core", mdl, nFOV, false)
@@ -147,15 +147,15 @@ local function DoZap(wep_ent, nFOV, viewM, zapMode)
 		if StartPos != nil and StartPosO != nil then
 			local zLength = (StartPosO - StartPos):Length()
 			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPos, scale3, scale3, ColorSet(wep_ent, 240) or Color(255,255,255,240))
+			CheckDrawSprite( StartPos, scale3, scale3, ColorSet(wep_ent, 240) or Color(255,150,150,240))
 			--local scale = math.Rand( 8, 10 )
 			--local scale2 = math.Rand( 25, 27 )
 			--local scale3 = math.Rand( 3, 5 )
 			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPosO, scale, scale, ColorSet(wep_ent, 80) or Color(255,255,255,80))
+			CheckDrawSprite( StartPosO, scale, scale, ColorSet(wep_ent, 80) or Color(255,150,150,80))
 			render.SetMaterial( ZapWorld )
 			
-			CheckDrawBeam( StartPosO, StartPos, 3, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + zLength / 128	, ColorSet(wep_ent, 255) or Color( 255, 255, 255, 255 ) ) 
+			CheckDrawBeam( StartPosO, StartPos, 3, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + zLength / 128	, ColorSet(wep_ent, 255) or Color(255,150,150,255) ) 
 		end
 	end
 end
@@ -212,12 +212,12 @@ local function DoEffect(wep_ent, nFOV, viewM)
 			StartPos = GetAttachment("muzzle", mdl, nFOV)
 			
 			render.SetMaterial( Mat )
-			CheckDrawSprite( StartPos, scale_muzzle_view, scale_muzzle_view, ColorSet(wep_ent, 240) or Color(255,255,255,240))
+			CheckDrawSprite( StartPos, scale_muzzle_view, scale_muzzle_view, ColorSet(wep_ent, 240) or Color(255,150,150,240))
 		elseif !isView then
 			StartPos = GetAttachment("core", mdl, nFOV, false)
 			
 			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPos, scale_muzzle_world, scale_muzzle_world, ColorSet(wep_ent, 240) or Color(255,255,255,240))
+			CheckDrawSprite( StartPos, scale_muzzle_world, scale_muzzle_world, ColorSet(wep_ent, 240) or Color(255,150,150,240))
 		end
 	end
 	
@@ -234,23 +234,23 @@ local function DoEffect(wep_ent, nFOV, viewM)
 			StartPosLH = GetAttachment("fork2b", mdl, nFOV)
 			
 			render.SetMaterial( Main )
-			--CheckDrawSprite( StartPos, scale_glow_view, scale_glow_view, ColorSet(wep_ent, 240) or Color(255,255,255,240))
+			--CheckDrawSprite( StartPos, scale_glow_view, scale_glow_view, ColorSet(wep_ent, 240) or Color(255,150,150,240))
 			--[[if GetConVar("cl_scgg_effects_mode"):GetInt() >= 1 then
-				CheckDrawSprite( StartPos, scale_glow_view, scale_glow_view, ColorSet(wep_ent, 50, true) or Color(255,255,255,35)) -- Half-Life 2 Survivor
-				CheckDrawSprite( StartPos, scale_core_view, scale_core_view, ColorSet(wep_ent, 90) or Color(255,255,255,90)) -- Half-Life 2 Survivor
+				CheckDrawSprite( StartPos, scale_glow_view, scale_glow_view, ColorSet(wep_ent, 50, true) or Color(255,150,150,35)) -- Half-Life 2 Survivor
+				CheckDrawSprite( StartPos, scale_core_view, scale_core_view, ColorSet(wep_ent, 90) or Color(255,150,150,90)) -- Half-Life 2 Survivor
 			else--]]
-				CheckDrawSprite( StartPos, scale_glow_view, scale_glow_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80)) -- Half-Life 2
+				CheckDrawSprite( StartPos, scale_glow_view, scale_glow_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80)) -- Half-Life 2
 			--end
 			render.SetMaterial( Mat )
-			CheckDrawSprite( StartPosO, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 160, true) or Color(255,255,255,160))
-			CheckDrawSprite( StartPosL, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 160, true) or Color(255,255,255,160))
-			CheckDrawSprite( StartPosOH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosLH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80))
-			--CheckDrawSprite( StartPos, 35, 35, ColorSet(wep_ent, 240) or Color(255,255,255,240))
-			CheckDrawSprite( StartPosO, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosL, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosOH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosLH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,255,255,80))
+			CheckDrawSprite( StartPosO, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 160, true) or Color(255,150,150,160))
+			CheckDrawSprite( StartPosL, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 160, true) or Color(255,150,150,160))
+			CheckDrawSprite( StartPosOH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosLH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80))
+			--CheckDrawSprite( StartPos, 35, 35, ColorSet(wep_ent, 240) or Color(255,150,150,240))
+			CheckDrawSprite( StartPosO, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosL, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosOH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosLH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80, true) or Color(255,150,150,80))
 		else
 			StartPos = GetAttachment("core", mdl, nFOV, false)
 			StartPosO = GetAttachment("fork1t", mdl, nFOV, false)
@@ -262,23 +262,23 @@ local function DoEffect(wep_ent, nFOV, viewM)
 			
 --			render.SetMaterial( Main )
 			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 120, false) or Color(255,255,255,120))
---			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 140, false) Color(255,255,255,140))
+			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 120, false) or Color(255,150,150,120))
+--			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 140, false) Color(255,150,150,140))
 --			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPosO, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 160, false) or Color(255,255,255,160))
-			CheckDrawSprite( StartPosL, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 160, false) or Color(255,255,255,160))
-			CheckDrawSprite( StartPosR, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 160, false) or Color(255,255,255,160))
-			CheckDrawSprite( StartPosOH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosLH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosRH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 100, false) or Color(255,255,255,100))
-			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 240, false) or Color(255,255,255,240))
-			CheckDrawSprite( StartPosO, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosL, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosR, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosOH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosLH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosRH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,255,255,80))
+			CheckDrawSprite( StartPosO, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 160, false) or Color(255,150,150,160))
+			CheckDrawSprite( StartPosL, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 160, false) or Color(255,150,150,160))
+			CheckDrawSprite( StartPosR, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 160, false) or Color(255,150,150,160))
+			CheckDrawSprite( StartPosOH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosLH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosRH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 100, false) or Color(255,150,150,100))
+			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 240, false) or Color(255,150,150,240))
+			CheckDrawSprite( StartPosO, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosL, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosR, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosOH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosLH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosRH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80, false) or Color(255,150,150,80))
 		end
 		wep_ent.Length = 10
 		wep_ent.Length2 = 10
@@ -296,19 +296,19 @@ local function DoEffect(wep_ent, nFOV, viewM)
 		if isView then
 			render.SetMaterial( Zap )
 			CheckDrawBeam( StartPosO, StartPos, 5, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + wep_ent.Length / 128, 
-			ColorSet(wep_ent, 195, false) or Color(205,255,195,195) ) 
+			ColorSet(wep_ent, 195, false) or Color(205,150,90,195) ) 
 			CheckDrawBeam( StartPosL, StartPos, 5, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + wep_ent.Length2 / 128, 
-			ColorSet(wep_ent, 195, false) or Color(205,255,195,195) ) 
+			ColorSet(wep_ent, 195, false) or Color(205,150,90,195) ) 
 			CheckDrawBeam( StartPosR, StartPos, 5, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + wep_ent.Length2 / 128, 
-			ColorSet(wep_ent, 195, false) or Color(205,255,195,195) ) 
+			ColorSet(wep_ent, 195, false) or Color(205,150,90,195) ) 
 		else
 			render.SetMaterial( ZapWorld )
 			CheckDrawBeam( StartPosO, StartPos, 2, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + wep_ent.Length / 128, 
-			ColorSet(wep_ent, 255, false) or Color(255,255,255,255) ) 
+			ColorSet(wep_ent, 255, false) or Color(255,150,150,255) ) 
 			CheckDrawBeam( StartPosL, StartPos, 2, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + wep_ent.Length2 / 128, 
-			ColorSet(wep_ent, 255, false) or Color(255,255,255,255) ) 
+			ColorSet(wep_ent, 255, false) or Color(255,150,150,255) ) 
 			CheckDrawBeam( StartPosR, StartPos, 2, math.Rand( 0, 1 ), math.Rand( 0, 1 ) + wep_ent.Length2 / 128, 
-			ColorSet(wep_ent, 255, false) or Color(255,255,255,255) ) 
+			ColorSet(wep_ent, 255, false) or Color(255,150,150,255) ) 
 		end
 	else
 		-- Idle Core
@@ -320,13 +320,13 @@ local function DoEffect(wep_ent, nFOV, viewM)
 			StartPosLH = GetAttachment("fork2b", mdl, nFOV)
 			
 			render.SetMaterial( Main )
-			--CheckDrawSprite( StartPos, scale_core_view, scale_core_view, ColorSet(wep_ent, 240) or Color(255,255,255,240))
-			CheckDrawSprite( StartPos, scale_core_view, scale_core_view, ColorSet(wep_ent, 90) or Color(255,255,255,90))
+			--CheckDrawSprite( StartPos, scale_core_view, scale_core_view, ColorSet(wep_ent, 240) or Color(255,150,150,240))
+			CheckDrawSprite( StartPos, scale_core_view, scale_core_view, ColorSet(wep_ent, 90) or Color(255,150,150,90))
 			render.SetMaterial( Mat )
-			CheckDrawSprite( StartPosO, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosL, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosOH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosLH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,255,255,80))
+			CheckDrawSprite( StartPosO, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosL, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosOH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosLH, scale_prong_view, scale_prong_view, ColorSet(wep_ent, 80) or Color(255,150,150,80))
 		else
 			StartPos = GetAttachment("core", mdl, nFOV, false)
 			StartPosO = GetAttachment("fork1t", mdl, nFOV, false)
@@ -338,15 +338,15 @@ local function DoEffect(wep_ent, nFOV, viewM)
 			
 --			render.SetMaterial( Main )
 			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 240) or Color(255,255,255,240))
---			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 130) or Color(255,255,255,130))
+			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 240) or Color(255,150,150,240))
+--			CheckDrawSprite( StartPos, scale_glow_world, scale_glow_world, ColorSet(wep_ent, 130) or Color(255,150,150,130))
 --			render.SetMaterial( MatWorld )
-			CheckDrawSprite( StartPosO, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosL, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosR, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosOH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosLH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,255,255,80))
-			CheckDrawSprite( StartPosRH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,255,255,80))
+			CheckDrawSprite( StartPosO, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosL, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosR, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosOH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosLH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,150,150,80))
+			CheckDrawSprite( StartPosRH, scale_prong_world, scale_prong_world, ColorSet(wep_ent, 80) or Color(255,150,150,80))
 		end
 	end
 	
