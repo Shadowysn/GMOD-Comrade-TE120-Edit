@@ -1,0 +1,17 @@
+"UnlitGeneric"
+{
+	"$basetexture" "models/effects/ar2_altfire2"
+	"$additive" 1
+	"$translucent" 1
+	"$vertexcolor" 1
+	"Proxies"
+		{
+			"AnimatedOffsetTexture"
+			{
+				"animatedtexturevar" "$basetexture"
+				"animatedtextureframenumvar" "$frame"
+				"animatedtextureframerate" 25.00
+			}
+}
+}
+
