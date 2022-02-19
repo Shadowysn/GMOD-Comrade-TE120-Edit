@@ -77,8 +77,12 @@ local function CheckDrawBeam(startPos, endPos, width, textureStart, textureEnd, 
 	end
 end
 local function ColorSet(wep_ent, alpha)
-	--[[if IsValid(wep_ent) and IsValid(wep_ent:GetOwner()) and GetConVar("cl_scgg_physgun_color"):GetInt() > 0 then
-		local getcol = wep_ent:GetOwner():GetPlayerColor():ToColor()
+	--[[local cvar_num = GetConVar("cl_scgg_physgun_color"):GetInt()
+	if IsValid(wep_ent) and IsValid(wep_ent:GetOwner()) and cvar_num > 0 then
+		local getcol = wep_ent:GetOwner():GetWeaponColor():ToColor()
+		if cvar_num > 1 then
+			getcol = wep_ent:GetOwner():GetPlayerColor():ToColor()
+		end
 		return Color(getcol.r,getcol.g,getcol.b,alpha)
 	end--]]
 	return nil
@@ -222,7 +226,7 @@ local function DoEffect(wep_ent, nFOV, viewM)
 	end
 	
 
-	if wep_ent.Owner:KeyDown(IN_ATTACK) then
+	if IsValid(wep_ent.Owner) and wep_ent.Owner:IsPlayer() and wep_ent.Owner:KeyDown(IN_ATTACK) then
 		-- Active Core (Glowing)
 		if isView then
 			StartPos = GetAttachment("muzzle", mdl, nFOV)
@@ -386,7 +390,7 @@ local function DoEffect(wep_ent, nFOV, viewM)
 	end
 	
 	if math.random( 1,  500 ) == 1 and 
-	(!IsValid(wep_ent.Owner) or (!wep_ent.Owner:KeyDown(IN_ATTACK))) then
+	(!IsValid(wep_ent.Owner) or !wep_ent.Owner:IsPlayer() or (wep_ent.Owner:IsPlayer() and !wep_ent.Owner:KeyDown(IN_ATTACK))) then
 		BeginZap(wep_ent, math.random(1, 3))
 	end
 end

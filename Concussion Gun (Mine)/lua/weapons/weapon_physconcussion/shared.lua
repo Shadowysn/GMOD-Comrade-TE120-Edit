@@ -27,9 +27,23 @@ SWEP.Secondary.Ammo		= ""
 util.PrecacheModel(SWEP.ViewModel)
 util.PrecacheModel(SWEP.WorldModel)
 
+local function IsOwnerAlive(owner)
+	if owner:IsPlayer() then
+		if !owner:Alive() then return false end
+	elseif owner:IsNPC() then
+		if owner:GetNPCState() == NPC_STATE_DEAD or owner:Health() <= 0 then return false end
+	end
+	return true
+end
+
+-- Some NPC support.
+function SWEP:CanBePickedUpByNPCs()
+	return true
+end
+
 function SWEP:OpenElements( boolean )
 --print("Open Elements!")
-if !IsValid(self.Owner) or !self.Owner:Alive() then return end
+if !IsValid(self.Owner) or !IsOwnerAlive(self.Owner) then return end
 	local active_string = "active"
 	local ViewModel = self.Owner:GetViewModel()
 	local WorldModel = self
@@ -57,7 +71,7 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 		timer.Remove("scgg_move_claws_close"..self:EntIndex())
 
 		timer.Create( "scgg_move_claws_open"..self:EntIndex(), 0, 20, function()
-		if !IsValid(self) or !IsValid(self.Owner) or !self.Owner:Alive() then timer.Remove("scgg_move_claws_open"..self:EntIndex()) return end
+		if !IsValid(self) or !IsValid(self.Owner) or !IsOwnerAlive(self.Owner) then timer.Remove("scgg_move_claws_open"..self:EntIndex()) return end
 		if IsValid(ViewModel) then
 			if frame > 1 then ViewModel:SetPoseParameter(active_string, 1) end
 			--if frame >= 1 then timer.Remove("scgg_move_claws_open"..self:EntIndex()) return end
@@ -99,7 +113,7 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 			--]]
 			end
 		end )
-		if (!IsValid(self.Owner) or !self.Owner:Alive()) or (!IsValid(ViewModel) and !IsValid(WorldModel)) then 
+		if (!IsValid(self.Owner) or !IsOwnerAlive(self.Owner)) or (!IsValid(ViewModel) and !IsValid(WorldModel)) then 
 		timer.Remove("scgg_move_claws_open"..self:EntIndex()) return end
 		if (frame <= 0 or worldframe <= 0) and !IsValid(self.HP) and boolean == true then
 			self.Weapon:StopSound("Weapon_PhysCannon.CloseClaws")
@@ -112,7 +126,7 @@ end
 
 function SWEP:CloseElements( boolean )
 --print("Close Elements!")
-if !IsValid(self.Owner) or !self.Owner:Alive() then return end
+if !IsValid(self.Owner) or !IsOwnerAlive(self.Owner) then return end
 	local active_string = "active"
 	local ViewModel = self.Owner:GetViewModel()
 	local WorldModel = self
@@ -124,7 +138,7 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 		timer.Remove("scgg_move_claws_open"..self:EntIndex())
 		
 		timer.Create( "scgg_move_claws_close"..self:EntIndex(), 0.02, 20, function()
-		if !IsValid(self.Owner) or !self.Owner:Alive() then timer.Remove("scgg_move_claws_close"..self:EntIndex()) return end
+		if !IsValid(self.Owner) or !IsOwnerAlive(self.Owner) then timer.Remove("scgg_move_claws_close"..self:EntIndex()) return end
 		if IsValid(ViewModel) then
 			if frame < 0 then ViewModel:SetPoseParameter(active_string, 0) end
 			--if frame <= 0 then print("doh2") timer.Remove("scgg_move_claws_close"..self:EntIndex()) return end
@@ -141,7 +155,7 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 				self.ClawOpenState = false
 				end
 		end )
-		if (!IsValid(self.Owner) or !self.Owner:Alive()) or (!IsValid(ViewModel) and !IsValid(WorldModel)) then 
+		if (!IsValid(self.Owner) or !IsOwnerAlive(self.Owner)) or (!IsValid(ViewModel) and !IsValid(WorldModel)) then 
 		timer.Remove("scgg_move_claws_close"..self:EntIndex()) return end
 			if (frame >= 1 or worldframe >= 1) and !IsValid(self.HP) and boolean == true then
 				self.Weapon:StopSound("Weapon_PhysCannon.OpenClaws")
@@ -151,8 +165,23 @@ if !IsValid(self.Owner) or !self.Owner:Alive() then return end
 	end
 end
 
+local function DetermineHoldType(swep)
+	if !IsValid(swep.Owner) then return end
+	
+	if swep.Owner:IsPlayer() then
+		swep.Weapon:SetHoldType( swep.HoldType )
+	elseif swep.Owner:IsNPC() then
+		swep.Weapon:SetHoldType( "shotgun" )
+		if SERVER then
+			if swep.Owner:Classify() == CLASS_METROPOLICE then
+				swep.Weapon:SetHoldType( "smg" )
+			end
+		end
+	end
+end
+
 function SWEP:Initialize()
-	self:SetHoldType(self.HoldType)
+	DetermineHoldType(self)
 	self.Recharged = true
 	self.CanFire = true
 end
@@ -163,7 +192,7 @@ function SWEP:Think()
 			local function AUXExists()
 				local suit_aux = self.Owner:GetSuitPower()
 				--if file.Exists("lua/autorun/auxpower.lua","GAME") and AUXPOW:IsEnabled() and AUXPOW:IsSuitEquipped(self.Owner) then
-				if self.Owner:IsSuitEquipped() and suit_aux != nil and suit_aux >= 0 then
+				if self.Owner:IsPlayer() and self.Owner:IsSuitEquipped() and suit_aux != nil and suit_aux >= 0 then
 					return true
 				end
 				return false
@@ -214,12 +243,32 @@ function SWEP:PrimaryAttack()
 	--self:OpenElements(false)
 	self.Recharged = nil
 	self.CanFire = nil
-	self.Owner:ScreenFade( SCREENFADE.IN, Color( 255, 255, 255, 40 ), 0.1, 0 )
 	self:CloseElements(false)
 	self.Weapon:EmitSound("Weapon_MegaPhysCannon.Launch")
-	self.Owner:ViewPunch( Angle( -5, 2, 0 ) )
-	self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	if self.Owner:IsPlayer() then
+		self.Owner:ScreenFade( SCREENFADE.IN, Color( 255, 255, 255, 40 ), 0.1, 0 )
+		self.Owner:ViewPunch( Angle( -5, 2, 0 ) )
+		self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	end
+	--print("fuck")
+	/*local ball = ents.Create( "prop_gravity_ball" )
+	ball:SetPos( self.Owner:GetShootPos() )
+	ball:Spawn()
+	
+	ball:Activate()
+	ball:SetOwner( self.Owner )
+	ball:SetPhysicsAttacker( self.Owner )
+	local phys = ball:GetPhysicsObject()
+	if IsValid(phys) then
+		phys:AddGameFlag( FVPHYSICS_NO_IMPACT_DMG )
+		phys:AddGameFlag( FVPHYSICS_NO_NPC_IMPACT_DMG )
+		ball.IsCBBall = true
+		phys:SetVelocity( self.Owner:GetAimVector()*1 )
+	end
+	ball:SetVelocity( self.Owner:GetAimVector()*10 )*/
+	--ball.GetShootVector = self.Owner:GetAimVector()
+	--ball.GetOwnerVelocity = self.Owner:GetVelocity()
 	
 	local DEBall2 = ents.Create( "sent_combine_ball_medium1" )
 	DEBall2:SetPos( self.Owner:GetShootPos() )
